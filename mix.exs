@@ -23,6 +23,7 @@ defmodule Patreon.MixProject do
 
   defp deps do
     [
+      {:ex_doc, "~> 0.26.0", only: :dev, runtime: false},
       {:tesla, "~> 1.4"},
       {:jason, "~> 1.2"}
     ]
