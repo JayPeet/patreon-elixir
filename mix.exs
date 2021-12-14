@@ -24,8 +24,6 @@ defmodule Patreon.MixProject do
   defp deps do
     [
       {:tesla, "~> 1.4"},
-      {:mime, "~> 2.0", override: true},
-      {:telemetry, "~> 1.0", override: true},
       {:jason, "~> 1.2"}
     ]
   end
