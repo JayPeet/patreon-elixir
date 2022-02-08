@@ -1,4 +1,4 @@
-defmodule Patreon.API.V2.Resources.Campaign do
+defmodule Patreon.API.V2.Resource.Campaign do
 
   @type t :: %__MODULE__{
     created_at: DateTime.t,
@@ -67,5 +67,26 @@ defmodule Patreon.API.V2.Resources.Campaign do
       |> Map.merge(response_map.attributes)
 
       Kernel.struct(__MODULE__, campaign)
+  end
+
+  def opts_to_query([]) do
+    []
+  end
+
+  def opts_to_query(include_fields) do
+    Enum.reduce(include_fields, [include: "members", "fields[campaign]": "", "fields[tiers]": "", "fields[creator]": "", "fields[benefits]": "", "fields[goals]": ""], &generate_query_option/2)
+    |> Keyword.filter(fn({_key, val}) -> val != "" end)
+  end
+
+  defp generate_query_option({:campaign, []}, acc) do
+    acc
+  end
+
+  defp generate_query_option({:campaign, campaign_fields}, acc) do
+    Keyword.put(acc, :"fields[campaign]", Enum.join(campaign_fields, ","))
+  end
+
+  defp generate_query_option(_todo, acc) do
+    acc
   end
 end
