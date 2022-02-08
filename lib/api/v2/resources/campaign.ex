@@ -74,7 +74,7 @@ defmodule Patreon.API.V2.Resource.Campaign do
   end
 
   def opts_to_query(include_fields) do
-    Enum.reduce(include_fields, [include: "members", "fields[campaign]": "", "fields[tiers]": "", "fields[creator]": "", "fields[benefits]": "", "fields[goals]": ""], &generate_query_option/2)
+    Enum.reduce(include_fields, ["fields[campaign]": "", "fields[tiers]": "", "fields[creator]": "", "fields[benefits]": "", "fields[goals]": ""], &generate_query_option/2)
     |> Keyword.filter(fn({_key, val}) -> val != "" end)
   end
 

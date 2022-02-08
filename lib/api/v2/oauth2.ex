@@ -59,9 +59,7 @@ defmodule Patreon.API.V2.Oauth2 do
       client(oauth2_token)
       |> Tesla.get("/campaigns", query: Patreon.API.V2.Resource.Campaign.opts_to_query(include_fields))
 
-      Jason.decode!(resp.body, keys: :atoms)
-      |> Map.get(:data)
-      |> Enum.map(&Patreon.API.V2.Resource.Campaign.from_response/1)
+    decode_resp(resp.body, Patreon.API.V2.Resource.Campaign)
   end
 
   @spec get_campaigns_members(any, any, any) :: [Patreon.API.V2.Resource.Member.t()]
@@ -70,9 +68,16 @@ defmodule Patreon.API.V2.Oauth2 do
       client(oauth2_token)
       |> Tesla.get("/campaigns/#{campaign.id}/members", query: ["fields[member]": "currently_entitled_amount_cents,full_name"])
 
-      Jason.decode!(resp.body, keys: :atoms)
-      |> Map.get(:data)
-      |> IO.inspect
-      |> Enum.map(&Patreon.API.V2.Resource.Member.from_response/1)
+    decode_resp(resp.body, Patreon.API.V2.Resource.Member)
+  end
+
+  defp decode_resp(resp_body, struct_type) do
+    with  %{data: d} = _data <- Jason.decode!(resp_body, keys: :atoms),
+          return_data <- Enum.map(d, &struct_type.from_response/1)
+    do
+      {:ok, return_data}
+    else
+      err -> {:error, err}
+    end
   end
 end
