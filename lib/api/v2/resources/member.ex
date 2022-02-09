@@ -37,12 +37,46 @@ defmodule Patreon.API.V2.Resource.Member do
   ]
 
   @spec from_response(map) :: %__MODULE__{}
-  def from_response(response_map) do
-    IO.inspect response_map
+  def from_response(%{data: data} = decoded) when is_list(data) do
+    Enum.map(decoded.data, &from_response/1)
+  end
+
+  @spec from_response(map) :: %__MODULE__{}
+  def from_response(%{data: data}) do
+    from_response(data)
+  end
+
+  @spec from_response(map) :: %__MODULE__{}
+  def from_response(data) do
+    IO.inspect data
     campaign =
-      %{id: response_map.id}
-      |> Map.merge(response_map.attributes)
+      %{id: data.id}
+      |> Map.merge(data.attributes)
 
       Kernel.struct(__MODULE__, campaign)
+  end
+
+
+
+  def opts_to_query([]) do
+    []
+  end
+
+  def opts_to_query(include_fields) do
+    Enum.reduce(include_fields, ["fields[member]": ""], &generate_query_option/2)
+    |> Keyword.filter(fn({_key, val}) -> val != "" end)
+    |> IO.inspect
+  end
+
+  defp generate_query_option({:member, []}, acc) do
+    acc
+  end
+
+  defp generate_query_option({:member, member_fields}, acc) do
+    Keyword.put(acc, :"fields[member]", Enum.join(member_fields, ","))
+  end
+
+  defp generate_query_option(_todo, acc) do
+    acc
   end
 end

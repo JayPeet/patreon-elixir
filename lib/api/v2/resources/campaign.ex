@@ -61,10 +61,20 @@ defmodule Patreon.API.V2.Resource.Campaign do
   ]
 
   @spec from_response(map) :: %__MODULE__{}
-  def from_response(response_map) do
+  def from_response(%{data: data} = decoded) when is_list(data) do
+    Enum.map(decoded.data, &from_response/1)
+  end
+
+  @spec from_response(map) :: %__MODULE__{}
+  def from_response(%{data: data}) do
+    from_response(data)
+  end
+
+  @spec from_response(map) :: %__MODULE__{}
+  def from_response(data) do
     campaign =
-      %{id: response_map.id}
-      |> Map.merge(response_map.attributes)
+      %{id: data.id}
+      |> Map.merge(data.attributes)
 
       Kernel.struct(__MODULE__, campaign)
   end
