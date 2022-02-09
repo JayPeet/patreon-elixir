@@ -4,7 +4,7 @@ defmodule Patreon.MixProject do
   def project do
     [
       app: :patreon,
-      version: "0.2.0",
+      version: "0.3.0",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       description: description(),
@@ -26,7 +26,7 @@ defmodule Patreon.MixProject do
       {:dialyxir, "~> 1.1", only: :dev, runtime: false},
       {:ex_doc, "~> 0.26.0", only: :dev, runtime: false},
       {:tesla, "~> 1.4"},
-      {:jason, "~> 1.2"}
+      {:jason, "~> 1.3"}
     ]
   end
 
