@@ -29,6 +29,7 @@ defmodule Patreon.API.V2.Resource.Campaign do
     vanity: String.t | nil
   }
 
+  @derive Jason.Encoder
   defstruct [
     :id,
     :created_at,

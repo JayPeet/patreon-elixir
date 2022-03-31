@@ -40,6 +40,7 @@ defmodule Patreon.API.V2.Resource.User do
     included: %{campaign: Patreon.API.V2.Resource.Campaign.t | nil, memberships: any | []}
   }
 
+  @derive Jason.Encoder
   defstruct [
     :id,
     :about,
