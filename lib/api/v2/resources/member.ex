@@ -18,6 +18,7 @@ defmodule Patreon.API.V2.Resource.Member do
     will_pay_amount_cents: integer | nil,
   }
 
+  @derive Jason.Encoder
   defstruct [
     :id,
     :campaign_lifetime_support_cents,
