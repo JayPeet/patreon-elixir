@@ -13,7 +13,7 @@ defmodule Patreon.API.V2.Resource.Member do
     next_charge_date: DateTime.t | nil,
     note: String.t | nil,
     patron_status: String.t | nil,
-    pledge_candence: integer | nil,
+    pledge_cadence: integer | nil,
     pledge_relationship_start: DateTime.t | nil,
     will_pay_amount_cents: integer | nil,
   }
@@ -32,7 +32,7 @@ defmodule Patreon.API.V2.Resource.Member do
     :next_charge_date,
     :note,
     :patron_status,
-    :pledge_candence,
+    :pledge_cadence,
     :pledge_relationship_start,
     :will_pay_amount_cents,
   ]
