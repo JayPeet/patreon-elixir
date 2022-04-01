@@ -49,7 +49,6 @@ defmodule Patreon.API.V2.Resource.Member do
 
   @spec from_response(map) :: %__MODULE__{}
   def from_response(data) do
-    IO.inspect data
     campaign =
       %{id: data.id}
       |> Map.merge(data.attributes)
@@ -66,7 +65,6 @@ defmodule Patreon.API.V2.Resource.Member do
   def opts_to_query(include_fields) do
     Enum.reduce(include_fields, ["fields[member]": ""], &generate_query_option/2)
     |> Keyword.filter(fn({_key, val}) -> val != "" end)
-    |> IO.inspect
   end
 
   defp generate_query_option({:member, []}, acc) do

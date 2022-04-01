@@ -13,7 +13,6 @@ defmodule Patreon do
           code when code >= 200 and code <= 229 ->
              {:ok, resp.body}
           err ->
-            IO.inspect err
             {:error, %{error: Patreon.ErrorCode.status_to_error(err)}}
           end
       {:error, err} -> {:error, err.body}

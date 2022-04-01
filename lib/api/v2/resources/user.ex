@@ -99,7 +99,7 @@ defmodule Patreon.API.V2.Resource.User do
   end
 
   def opts_to_query(include_fields) do
-    Enum.reduce(include_fields, ["fields[user]": "", include: "", "fields[campaign]": "", "fields[memberships]": ""], &generate_query_option/2)
+    Enum.reduce(include_fields, ["fields[user]": "", include: "", "fields[campaign]": "", "fields[member]": ""], &generate_query_option/2)
     |> Keyword.filter(fn({_key, val}) -> val != "" end)
   end
 
@@ -127,7 +127,7 @@ defmodule Patreon.API.V2.Resource.User do
     |> Enum.filter(fn(val) -> val != "" end)
     |> Enum.join(",")
 
-    Keyword.put(acc, :"fields[memberships]", Enum.join(memberships_fields, ","))
+    Keyword.put(acc, :"fields[member]", Enum.join(memberships_fields, ","))
     |> Keyword.put(:include, updated_include)
   end
 end
