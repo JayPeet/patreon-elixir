@@ -25,6 +25,7 @@ defmodule Patreon.OAuth2 do
     Patreon.validate_authorization_code(code)
   end
 
+  @spec refresh_oauth2_token(String.t()) :: Patreon.refresh_response()
   def refresh_oauth2_token(refresh_token) do
     Patreon.refresh_oauth2_token(refresh_token)
   end
