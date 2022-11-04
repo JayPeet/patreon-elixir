@@ -18,4 +18,17 @@ defmodule Patreon do
       {:error, err} -> {:error, err.body}
     end
   end
+
+  def refresh_oauth2_token(refresh_token) do
+    case post("/api/oauth2/token", Patreon.Config.refresh_token_form(refresh_token)) do
+      {:ok, resp} ->
+        case resp.status do
+          code when code >= 200 and code <= 229 ->
+             {:ok, resp.body}
+          err ->
+            {:error, %{error: Patreon.ErrorCode.status_to_error(err)}}
+          end
+      {:error, err} -> {:error, err.body}
+    end
+  end
 end

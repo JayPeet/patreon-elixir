@@ -24,4 +24,8 @@ defmodule Patreon.OAuth2 do
   def validate_authorization_code(code) do
     Patreon.validate_authorization_code(code)
   end
+
+  def refresh_oauth2_token(refresh_token) do
+    Patreon.refresh_oauth2_token(refresh_token)
+  end
 end

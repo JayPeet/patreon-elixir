@@ -18,4 +18,13 @@ defmodule Patreon.Config do
     authorization_code_form()
     |> Map.replace!(:code, code)
   end
+
+  def refresh_token_form(refresh_token) do
+    %{
+      grant_type: "refresh_token",
+      refresh_token: refresh_token,
+      client_id: client_id(),
+      client_secret: client_secret()
+    }
+  end
 end
